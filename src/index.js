@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from 'react-router-dom';
 import {Provider, inject, observer} from "mobx-react";
 import {AppStore} from "./store/AppStore";
-import css from "./static/style/css/base.css";
+import sass from "./static/style/sass/base.sass";
 
 import App from "./app";
 
@@ -15,9 +15,7 @@ function renderApp(store) {
   try {
     ReactDOM.render(
         <Provider appStore={store}>
-            <BrowserRouter>
               <App />
-            </BrowserRouter>
         </Provider>,
         document.getElementById("root")
     );

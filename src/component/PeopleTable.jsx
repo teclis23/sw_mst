@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
 import {TableHeader} from "./Table/TableHeader.jsx";
@@ -20,7 +21,6 @@ import {desc, stableSort, getSorting} from "./utils.js";
 
 
 const rows = [
-  { id: 'id', numeric: false, disablePadding: false, label: 'id' },
   { id: 'name', numeric: false, disablePadding: false, label: 'name' },
   { id: 'height', numeric: true, disablePadding: false, label: 'height' },
   { id: 'mass', numeric: true, disablePadding: false, label: 'mass' },
@@ -40,7 +40,13 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit,
+    color: theme.palette.secondary.main,
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.main ,
+      color: `#ffffff`,
+    },
   },
+  
 });
 
 
@@ -146,7 +152,7 @@ class PeopleTable extends React.Component {
     let laodingInfo = isLoading ? <h1>Loading...</h1> : '';
 
     let persons =  this.appStore.people.filter != "" ? this.filterPersons() : this.appStore.people.persons.map((person)=> person);
-
+    
     return (
       <Paper className={classes.root}>
         {laodingInfo}
@@ -175,10 +181,12 @@ class PeopleTable extends React.Component {
                       tabIndex={-1}
                       key={person.id}
                     >
-                      <TableCell numeric>{person.id}</TableCell>
-                      <TableCell numeric>{person.name}</TableCell>
-                      <TableCell numeric>{person.height}</TableCell>
-                      <TableCell numeric>{person.mass}</TableCell>
+                      <TableCell numeric>
+                        <Typography  color="secondary">{person.name}</Typography></TableCell>
+                      <TableCell numeric>
+                        <Typography  color="secondary">{person.height}</Typography></TableCell>
+                      <TableCell numeric>
+                        <Typography  color="secondary">{person.mass}</Typography></TableCell>
                       <TableCell >
                         <Link to={`/details`}> 
                           <IconButton className={classes.button} aria-label="Edit" onClick={ () => this.selectPersonHeandler(person) }>

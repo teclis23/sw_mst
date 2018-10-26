@@ -58,10 +58,18 @@ const styles = theme => ({
         },
       },
     },
+    deleteBtn: {
+
+    },
     button: {
       margin: theme.spacing.unit,
       paddingLeft:  theme.spacing.unit *2,
       paddingRight:  theme.spacing.unit *2,
+      backgroundColor: theme.palette.warning.dark,
+      color: `#ffffff`,
+      '&:hover': {
+        backgroundColor: theme.palette.warning.main ,
+      },
     },
   });
 
@@ -106,7 +114,7 @@ class ToolbarContent extends React.Component {
                 />
             </div>,
             <Link key="add_btn" to={`/details`}>
-              <Button  color="default" variant="contained" size="small" className={classes.button} onClick={this.addNewPerson}>
+              <Button variant="contained" size="small" className={classes.button} onClick={this.addNewPerson}>
                 Add person
               </Button>
             </Link>

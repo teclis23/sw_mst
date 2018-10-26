@@ -1,8 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { inject, observer, computed} from "mobx-react";
 import {ApplicationBar} from "../../element";
+import { withStyles } from '@material-ui/core/styles';
 import {PaperSheet} from "../../element";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -12,9 +14,24 @@ import createDebug from "debug";
 const debug = createDebug("SWAPI: Details");
 
 
+const styles = theme => ({
+    deleteBtn: {
+        backgroundColor: theme.palette.warning.dark,
+        color: `#ffffff`,
+        '&:hover': {
+          backgroundColor: theme.palette.warning.main ,
+        },
+      },
+      button: {
+        margin: theme.spacing.unit,
+        paddingLeft:  theme.spacing.unit *2,
+        paddingRight:  theme.spacing.unit *2,
+      },
+});
+
 @inject("appStore")
 @observer
-export default class Details extends React.Component {
+export class Details extends React.Component {
     constructor(props, context) {
         super(props, context);
 
@@ -57,6 +74,8 @@ export default class Details extends React.Component {
 
     render () {
 
+        const { classes } = this.props;
+
         return (
             <div>
                 <ApplicationBar title="Star Wars character editor" toolbarContent={<ToolbarContent/>}/>
@@ -64,7 +83,7 @@ export default class Details extends React.Component {
                 <Link to={`/`}>Home</Link>
 
                 <PaperSheet>
-                    
+                    <div>
                         <TextField
                             label="Name"
                             required
@@ -92,16 +111,24 @@ export default class Details extends React.Component {
                             </Button>
                         </Link>
                         <Link to={`/`}>
-                            <Button color="secondary" variant="contained" size="small" onClick={this.deletePerson}>
+                            <Button className={classes.button + ' ' + classes.deleteBtn} variant="contained" size="small" onClick={this.deletePerson}>
                                 Delete
                             </Button>
                         </Link>
+                    </div>
                 </PaperSheet>
             </div>
             
         );
     }
 }
+
+
+Details.propTypes = {
+    classes: PropTypes.object.isRequired,
+  };
+  
+export default withStyles(styles)(Details);
 
 class ToolbarContent extends React.Component {
 

@@ -52,6 +52,7 @@
         "mobx-state-tree": "^3.7.0",
         "prop-types": "^15.6.2",
         "qs": "^6.5.2",
+        "raw-loader": "^0.5.1",
         "react": "^16.4.1",
         "react-dom": "^16.4.1",
         "react-router-dom": "^4.3.1",

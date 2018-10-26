@@ -5,6 +5,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Tooltip from '@material-ui/core/Tooltip';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
+import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 
 
@@ -24,7 +25,7 @@ export class TableHeader extends React.Component {
         const { onSelectAllClick, order, orderBy, numSelected, rowCount, rows } = this.props;
 
         return (
-        <TableHead>
+        <TableHead  id="table_header">
             <TableRow>
 
             {rows.map(row => {
@@ -45,14 +46,14 @@ export class TableHeader extends React.Component {
                         direction={order}
                         onClick={this.createSortHandler(row.id)}
                     >
-                        {row.label}
+                        <Typography  color="secondary">{row.label}</Typography>
                     </TableSortLabel>
                     </Tooltip>
                 </TableCell>
                 );
             }, this)}
             <TableCell>
-                Actions
+                <Typography  color="secondary">Actions</Typography>
             </TableCell>
             </TableRow>
         </TableHead>

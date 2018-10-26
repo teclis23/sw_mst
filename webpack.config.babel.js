@@ -20,11 +20,22 @@ export default {
                 }
             }]
         }, {
-            test: /\.(css|scss)$/,
-            use: [
-                "style-loader", // creates style nodes from JS strings
-                "css-loader", // translates CSS into CommonJS
-                "sass-loader" // compiles Sass to CSS, using Node Sass by default
+            test: /\.(css|sass)$/,
+            use: [{
+                    loader: 'style-loader',
+                },
+                {
+                    loader: 'css-loader',
+                    options: {
+                        sourceMap: true,
+                    },
+                },
+                {
+                    loader: 'sass-loader',
+                    options: {
+                        sourceMap: true,
+                    },
+                },
             ]
         }]
     },
