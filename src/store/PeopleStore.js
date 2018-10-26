@@ -10,6 +10,7 @@ const debug = createDebug("SWAPI: Model -> People");
 export const PeopleStore = types.model("PeopleStore", {
         idCounter: types.optional(types.integer, 0),
         isLoading: false,
+        filter: types.optional(types.string, ""),
         persons: types.optional(types.array(Person), []),
         selectedPerson: types.maybe(types.reference(Person)),
     })
@@ -24,7 +25,7 @@ export const PeopleStore = types.model("PeopleStore", {
             if (typeof window.localStorage !== "undefined" && window.localStorage.getItem(`sw-people`) != null) {
                 self.readFromLocalStorage();
                 reaction(
-                    () => getSnapshot(self.persons),
+                    () => getSnapshot(self),
                     snapshot => {
                         window.localStorage.setItem(`sw-people`, JSON.stringify(snapshot));
                     }
@@ -37,7 +38,6 @@ export const PeopleStore = types.model("PeopleStore", {
             self.idCounter = 0;
         },
         useIdCounter() {
-            console.log("before", self.idCounter);
             return self.idCounter++;
         },
         refreshPeople() {
@@ -84,14 +84,11 @@ export const PeopleStore = types.model("PeopleStore", {
             self.selectedPerson = undefined;
         },
         deletePerson(person) {
-            console.log("delete person: ", person);
             self.clear();
             self.persons.remove(person);
+
+            window.localStorage.setItem(`sw-people`, JSON.stringify(getSnapshot(self)));
         },
-        // removePerson() {
-        //     console.log("remove from store");
-        //     self.persons.splice(self.persons.indexOf(self.selectedPerson), 1);
-        // },
         savePerson(data) {
 
             if (data) {
@@ -99,6 +96,8 @@ export const PeopleStore = types.model("PeopleStore", {
                 self.selectedPerson.setHeight(data.height ? data.height : 0);
                 self.selectedPerson.setMass(data.mass ? data.mass : 0);
             }
+
+            window.localStorage.setItem(`sw-people`, JSON.stringify(getSnapshot(self)));
         },
         addPerson() {
             let temp = {
@@ -109,5 +108,8 @@ export const PeopleStore = types.model("PeopleStore", {
             }
             self.persons.push(temp);
             self.selectedPerson = self.persons[self.persons.length - 1];
+        },
+        setFilter(query) {
+            self.filter = query;
         }
     }));

@@ -77,13 +77,15 @@ class ToolbarContent extends React.Component {
   }
 
   addNewPerson = () => {
-      console.log("add new person click");
       this.people.addPerson();
+  }
+
+  dataFilter = (event) => {
+    this.people.setFilter(event.target.value);
   }
 
     render() {
       const { classes } = this.props;
- 
 
         return (
             [
@@ -100,6 +102,7 @@ class ToolbarContent extends React.Component {
                     root: classes.inputRoot,
                     input: classes.inputInput,
                 }}
+                onChange={this.dataFilter}
                 />
             </div>,
             <Link key="add_btn" to={`/details`}>

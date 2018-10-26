@@ -122,6 +122,21 @@ class PeopleTable extends React.Component {
   deletePerson = (person) => {
       this.appStore.people.deletePerson(person);
   }
+
+
+  filterPersons = () => {
+    let query = this.appStore.people.filter.toLowerCase();
+    
+    return this.appStore.people.persons.filter((person) => {
+      let name =  person.name.toLowerCase();
+      let height = person.height.toString().toLowerCase();
+      let mass = person.mass.toString().toLowerCase();
+
+      return (name.indexOf(query) !== -1
+      || mass.indexOf(query) !== -1
+      || height.indexOf(query) !== -1);
+    });
+  }
   
   render() {
     
@@ -129,7 +144,8 @@ class PeopleTable extends React.Component {
     const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
 
     let laodingInfo = isLoading ? <h1>Loading...</h1> : '';
-    let persons =  this.appStore.people.persons.map((person)=> person);
+
+    let persons =  this.appStore.people.filter != "" ? this.filterPersons() : this.appStore.people.persons.map((person)=> person);
 
     return (
       <Paper className={classes.root}>
@@ -148,6 +164,7 @@ class PeopleTable extends React.Component {
             />
 
             <TableBody>
+
               {stableSort(persons, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map( (person, index) => {

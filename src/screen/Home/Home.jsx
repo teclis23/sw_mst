@@ -36,7 +36,7 @@ export default class Home extends React.Component {
                 <ApplicationBar title="Star Wars characters" toolbarContent={<ToolbarContent/>}/>
                
                 <PaperSheet>
-                    <PeopleTable isLoading={this.people.isLoading}/>
+                    <PeopleTable isLoading={this.appStore.people.isLoading}/>
                 </PaperSheet>
                
             

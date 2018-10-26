@@ -17,7 +17,6 @@ export const AppStore = types.model("AppStore", {
     }))
     .actions(self => ({
         afterCreate() {
-            console.log("AppStore created");
             self.toggleLoading();
         },
         toggleLoading(newValue = false) {
