@@ -24,9 +24,9 @@ export const PeopleStore = types.model("PeopleStore", {
             if (typeof window.localStorage !== "undefined" && window.localStorage.getItem(`sw-people`) != null) {
                 self.readFromLocalStorage();
                 reaction(
-                    () => getSnapshot(self),
+                    () => getSnapshot(self.persons),
                     snapshot => {
-                        window.localStorage.setItem(`sw-people`, JSON.stringify(snapshot))
+                        window.localStorage.setItem(`sw-people`, JSON.stringify(snapshot));
                     }
                 );
             } else {
@@ -60,6 +60,7 @@ export const PeopleStore = types.model("PeopleStore", {
             }).catch(err => {
                 self.toggleLoading(false);
             });
+
         },
         getPerson(id) {
             return self.persons[id];
@@ -79,15 +80,18 @@ export const PeopleStore = types.model("PeopleStore", {
         selectPerson(id) {
             self.selectedPerson = id;
         },
+        clear() {
+            self.selectedPerson = undefined;
+        },
         deletePerson(person) {
             console.log("delete person: ", person);
-            destroy(person);
-            window.localStorage.setItem(`sw-people`, JSON.stringify(getSnapshot(self)));
+            self.clear();
+            self.persons.remove(person);
         },
-        removePerson() {
-            console.log("remove from store");
-            self.persons.splice(self.persons.indexOf(self.selectedPerson), 1);
-        },
+        // removePerson() {
+        //     console.log("remove from store");
+        //     self.persons.splice(self.persons.indexOf(self.selectedPerson), 1);
+        // },
         savePerson(data) {
 
             if (data) {
@@ -95,8 +99,6 @@ export const PeopleStore = types.model("PeopleStore", {
                 self.selectedPerson.setHeight(data.height ? data.height : 0);
                 self.selectedPerson.setMass(data.mass ? data.mass : 0);
             }
-
-            window.localStorage.setItem(`sw-people`, JSON.stringify(getSnapshot(self)));
         },
         addPerson() {
             let temp = {

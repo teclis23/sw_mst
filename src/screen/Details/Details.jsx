@@ -51,7 +51,8 @@ export default class Details extends React.Component {
     }  
 
     deletePerson = () => {
-        this.appStore.people.deletePerson(this.selectedPerson);
+        console.log("AR",this.props.appStore.people.selectedPerson);
+        this.appStore.people.deletePerson(this.props.appStore.people.selectedPerson);
     }
 
     render () {
