@@ -21,12 +21,7 @@ const styles = theme => ({
         '&:hover': {
           backgroundColor: theme.palette.warning.main ,
         },
-      },
-      button: {
-        margin: theme.spacing.unit,
-        paddingLeft:  theme.spacing.unit *2,
-        paddingRight:  theme.spacing.unit *2,
-      },
+      }
 });
 
 @inject("appStore")
@@ -79,10 +74,8 @@ export class Details extends React.Component {
         return (
             <div>
                 <ApplicationBar title="Star Wars character editor" toolbarContent={<ToolbarContent/>}/>
-                <h1>Details page</h1>
-                <Link to={`/`}>Home</Link>
 
-                <PaperSheet>
+                <PaperSheet id="details_wrapper">
                     <div>
                         <TextField
                             label="Name"
@@ -92,29 +85,38 @@ export class Details extends React.Component {
                             onChange={this.handleChange('name')}
                             margin="normal"
                             />
+                        <TextField  
+                            label="Mass"
+                            value={this.state.mass}
+                            onChange={this.handleChange('mass')}
+                            margin="normal"
+                            type="number"
+                            />
                         <TextField
                             label="Height"
                             value={this.state.height}
                             onChange={this.handleChange('height')}
                             margin="normal"
-                            />
-                        <TextField
-                            label="Mass"
-                            value={this.state.mass}
-                            onChange={this.handleChange('mass')}
-                            margin="normal"
+                            type="number"
                             />
                         
-                        <Link to={`/`}>
-                            <Button disabled={this.state.name == ""} color="primary" variant="contained" size="small" onClick={this.savePerson}>
-                                Save
+                        <div id={"details_btns_wrapper"}>
+                            
+                            <Button disabled={this.state.name == ""} className="details_btn_link" color="primary" variant="contained" size="small" onClick={this.savePerson}>
+                                <Link to={`/`} >Save</Link>
                             </Button>
-                        </Link>
-                        <Link to={`/`}>
-                            <Button className={classes.button + ' ' + classes.deleteBtn} variant="contained" size="small" onClick={this.deletePerson}>
-                                Delete
+                        
+                        
+                            <Button disabled={this.state.name == ""} className="details_btn_link" color="primary" variant="contained" size="small">
+                                <Link to={`/`}  >Close</Link>
                             </Button>
-                        </Link>
+                        
+                        
+                            <Button className={classes.button + ' ' + classes.deleteBtn + ' details_btn_link'} variant="contained" size="small" onClick={this.deletePerson}>
+                                <Link to={`/`} >Delete</Link>
+                            </Button>
+                            
+                        </div>
                     </div>
                 </PaperSheet>
             </div>

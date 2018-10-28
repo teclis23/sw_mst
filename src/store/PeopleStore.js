@@ -104,7 +104,8 @@ export const PeopleStore = types.model("PeopleStore", {
                 id: self.useIdCounter(),
                 name: "",
                 height: 0,
-                width: 0
+                width: 0,
+                mass: 0,
             }
             self.persons.push(temp);
             self.selectedPerson = self.persons[self.persons.length - 1];

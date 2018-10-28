@@ -16,11 +16,11 @@ const styles = theme => ({
 
 function PaperSheet(props) {
 
-  const {root} = props;
+  const {root, id} = props;
 
   return (
     <div>
-      <Paper id="paper" classes={root} elevation={1}>
+      <Paper id={id ? id : "paper" } classes={root} elevation={1}>
         {props.children}
       </Paper>
     </div>
